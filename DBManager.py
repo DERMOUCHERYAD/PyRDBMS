@@ -1,5 +1,7 @@
 import json
 import os
+from Database import Database
+
 class DBManager:
     def __init__(self, db_config):
       
@@ -10,19 +12,19 @@ class DBManager:
                                                                               
     def CreateDatabase(self, nom_bdd):
     #Crée une nouvelle base de données avec le nom spécifié.
-          if nom_bdd in self.databases:
-          raise ValueError(f"La base de données '{nom_bdd}' existe déjà.")
+        if nom_bdd in self.databases:
+            raise ValueError(f"La base de données '{nom_bdd}' existe déjà.")
     # Ajouter une nouvelle base de données (instance de Database) au dictionnaire
-       self.databases[nom_bdd] = Database(nom_bdd)
-           print(f"Base de données '{nom_bdd}' créée avec succès.")
+        self.databases[nom_bdd] = Database(nom_bdd)
+        print(f"Base de données '{nom_bdd}' créée avec succès.")
 
     def SetCurrentDatabase(self, nom_bdd):
     # Active la base de données spécifiée par son nom.
         if nom_bdd not in self.databases:
-        raise ValueError(f"La base de données '{nom_bdd}' n'existe pas.")
+            raise ValueError(f"La base de données '{nom_bdd}' n'existe pas.")
     # Définir la base de données active
-    self.active_database = self.databases[nom_bdd]
-    print(f"Base de données active : '{nom_bdd}'.")
+        self.active_database = self.databases[nom_bdd]
+        print(f"Base de données active : '{nom_bdd}'.")
 
     def AddTableToCurrentDatabase(self, tab):
     #Ajoute une table à la base de données active.
@@ -96,8 +98,13 @@ class DBManager:
         print(f"Tables dans la base de données '{self.active_database.name}':")
         for table_name, relation in self.active_database.tables.items(): # parcourir le dictionnaire pour avoir des paires (clé,valeur) sous forme de tuples 
         # Construire le schéma à partir des colonnes de la relation
-            schema = ", ".join(relation.colInfoList) #concaténer les éléments de la liste en la sépareant par , 
-            print(f"CREATE TABLE {table_name} ({schema})")
+            schema = ""
+            for i in range(len(relation.col_info_list)):
+                if(i == len(relation.col_info_list)-1):
+                    schema += (relation.col_info_list[i].toString())
+                else:
+                    schema += (relation.col_info_list[i].toString()) + ", " #concaténer les éléments de la liste en la sépareant par ,
+            print(f" TABLE {table_name} ({schema})")
 
     def SaveState(self):
     #Sauvegarde l'état actuel des bases de données et des tables dans un fichier JSON.

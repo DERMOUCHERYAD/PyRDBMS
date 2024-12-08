@@ -47,7 +47,6 @@ class DBConfig:
     
     @staticmethod    
     def load_db_config(file_path):
-        
         try:
             with open(file_path, 'r') as file:
                 config=json.load(file)

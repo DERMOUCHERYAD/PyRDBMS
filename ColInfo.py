@@ -11,3 +11,6 @@ class ColInfo:
 
     def __str__(self):
         return f"{self.colNom}:{self.colType}"
+    
+    def toString(self):
+        return f"{self.colNom}:{self.colType}"

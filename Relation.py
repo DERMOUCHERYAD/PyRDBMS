@@ -1,6 +1,6 @@
 import struct
 
-from PageId import PageId
+from pageId import PageId
 from Record import Record
 from RecordId import RecordId
 

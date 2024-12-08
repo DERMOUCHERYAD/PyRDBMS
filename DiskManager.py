@@ -6,9 +6,7 @@ class DiskManager:
     def __init__(self, dbc):
       self.dbc=dbc
       self.free_pages = []
-      
-    
-            
+         
     def AllocPage(self):
         self.LoadState()
         # If there are any free pages, reuse one
