@@ -58,7 +58,45 @@ class SGBD:
     def ProcessListDatabasesCommand(self, cmd):
         self.dbManager.ListDatabases()
 
-    #def run():
+    def run(self):
+        print("Welcome dans notre SGBD. Tapez une commande ou 'QUIT' pour quitter.")
+        while True:
+            try:
+                # Affiche le prompt "?" et récupère l'entrée du user
+                cmd = input("? ").strip()
+                if cmd.upper() == "QUIT":
+                    print("Sauvegarde de l'état.")
+                    self.dbManager.SaveState()
+                    print("Ciao !")
+                    break  # Quitte la boucle pour arrêter l'application (pas tres cool d'utiliser ça mais bon)
+
+                # Analyse la commande et appelle la méthode appropriée
+                action = cmd.split()[0].upper()
+                if action == "CREATE" and cmd.split()[1].upper() == "DATABASE":
+                    self.ProcessCreateDatabaseCommand(cmd)
+                elif action == "SET" and cmd.split()[1].upper() == "DATABASE":
+                    self.ProcessSetCurrentDatabaseCommand(cmd)
+                elif action == "CREATE" and cmd.split()[1].upper() == "TABLE":
+                    self.ProcessAddTableToCurrentDatabaseCommand(cmd)
+                elif action == "GET" and cmd.split()[1].upper() == "TABLE":
+                    self.ProcessGetTableFromCurrentDatabaseCommand(cmd)
+                elif action == "DROP" and cmd.split()[1].upper() == "TABLE":
+                    self.ProcessRemoveTableFromCurrentDatabaseCommand(cmd)
+                elif action == "DROP" and cmd.split()[1].upper() == "DATABASE":
+                    self.ProcessRemoveDatabaseCommand(cmd)
+                elif action == "DROP" and cmd.split()[1].upper() == "TABLES":
+                    self.ProcessRemoveTablesFromCurrentDatabaseCommand(cmd)
+                elif action == "DROP" and cmd.split()[1].upper() == "DATABASES":
+                    self.ProcessRemoveDatabasesCommand(cmd)
+                elif action == "LIST" and cmd.split()[1].upper() == "DATABASES":
+                    self.ProcessListDatabasesCommand(cmd)
+                elif action == "LIST" and cmd.split()[1].upper() == "TABLES":
+                    self.dbManager.ListTablesInCurrentDatabase()  # Appelle directement depuis dbManager
+                else:
+                    print("Commande non reconnue :(")
+            except Exception as e:
+                print(f"Erreur lors du traitement de la commande : {e}")
+
 
 
     def main(self, path):
