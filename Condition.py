@@ -6,7 +6,7 @@ class Condition:
         self.term_right = term_right  #Terme droit (peut être un indice de colonne ou une constante).
         self.col_type = col_type  # Optionnel, utilisé pour comparer correctement les chaînes (ex: int, float, str) pour une gestion correcte.
 
-    def evaluate(self, record, relation):
+    def evaluate(self, record, relation=None): #nom d'indice de colonne ou vérifier les types 
         """
         Évalue la condition pour un enregistrement donné.
         :param record: Liste des valeurs de l'enregistrement.
@@ -27,7 +27,7 @@ class Condition:
             ">=": left_value >= right_value,
         }.get(self.operator, False)  # si la clé n'existe pas  retourne False par default 
 
-    def _get_value(self, term, record, relation):
+    def _get_value(self, term, record, relation=None):
         """
         Obtient la valeur réelle d'un terme.
         :param term: Peut être un indice de colonne ou une constante.
