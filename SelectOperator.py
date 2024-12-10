@@ -12,7 +12,7 @@ class SelectOperator(IRecordIterator):
         """
         Récupère le prochain tuple qui satisfait la condition.
         """
-        while True:
+        while True: #de la l'evaluation de la condition 
             record = self.child.GetNextRecord() 
             if record is None:
                 return None  # Plus de tuples à parcourir
