@@ -60,7 +60,6 @@ class SGBD:
     def ProcessListDatabasesCommand(self, cmd):
         self.dbManager.ListDatabases()
 
-
     def run(self):
         print("Welcome dans notre SGBD. Tapez une commande ou 'QUIT' pour quitter.")
         while True:
@@ -100,7 +99,9 @@ class SGBD:
             except Exception as e:
                 print(f"Erreur lors du traitement de la commande : {e}")
 
-    def main(path):
+
+
+    def main(self, path):
         dbConfig = DBConfig.load_db_config(path)
         sgbd = SGBD(dbConfig)
         sgbd.run()
